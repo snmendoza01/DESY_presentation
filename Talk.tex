@@ -67,48 +67,7 @@
   \end{itemize}
 \end{frame}
 
-%----------------------------------------------------------------------
-% Missuse parts as chapters according to DESY PR
-\part[Part slide]{Introduction}
-\makepart%
-
-%----------------------------------------------------------------------
-\section{\ldots}
-
-% Add a sample slide with some math, some columns etc.
-\begin{frame}[t,label=intro]
-\frametitle{The Challenge}
-\begin{itemize}[<+->]
-    \item Solving Schrödinger's Equation is \textbf{hard}
-    \item Usually turn to numerical approximations
-    \item \ldots but numerics have limitations
-    \item The Curse of Dimensionality
-\end{itemize}
-
-\[
-    E_{t,ij} = \sum_{k,l} \sum_{\lambda_i, \lambda_i'}
-        \rho_{\lambda_1,\lambda_1'}(e^-_1)
-        \rho_{\lambda_2,\lambda_2'}(e^-_2)
-        [T_{ij}^{\lambda_1\phantom{'} \lambda_2}(\neutralino_k)]
-        \cdot
-        [T_{ij}^{\lambda_1' \lambda_2'}(\neutralino_k)]^*
-\]
-
-% left aligned columns. Note that columns with smaller width are
-% centred automatically
-\begin{columns}
-    \begin{column}[t]{0.48\textwidth}
-    Duis autem vel eum iriure dolor in hendrerit in vulputate velit
-    esse molestie consequat, vel illum dolore eu feugiat nulla
-    facilisis at vero eros et accumsan\ldots
-    \end{column}
-    \begin{column}[t]{0.48\textwidth}
-    Nam liber tempor cum soluta nobis eleifend option congue nihil
-    imperdiet \ldots
-    \end{column}
-\end{columns}
-\end{frame}
-
+\input{sections/01_introduction}
 
 %----------------------------------------------------------------------
 % Thank you page is assembled from metadata.tex
