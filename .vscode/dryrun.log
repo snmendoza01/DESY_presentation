@@ -1,0 +1,22 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/nicolasmendoza/Documents/Machine-Learning/RNVP/presentation'
+'lualatex' Presentation
+mv Presentation.aux tmp/
+mv Presentation.log tmp/
+mv Presentation.nav tmp/
+mv Presentation.snm tmp/
+mv Presentation.toc tmp/
+mv Presentation.*.vrb tmp/
+mv Presentation.out.ps tmp/
+'lualatex' Handout
+mv Handout.aux tmp/
+mv Handout.log tmp/
+mv Handout.nav tmp/
+mv Handout.snm tmp/
+mv Handout.toc tmp/
+mv Handout.*.vrb tmp/
+mv Handout.out.ps tmp/
+cp Presentation.pdf ..
+cp Handout.pdf ..
+make: Leaving directory `/Users/nicolasmendoza/Documents/Machine-Learning/RNVP/presentation'
+ 
