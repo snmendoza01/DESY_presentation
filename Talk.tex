@@ -15,9 +15,15 @@
 \mode<presentation>{%
     \usetheme{DESY}
 }
+
 \input{macros}
 \input{metadata}
-
+\newcommand{\Hhat}{\hat{H}}
+\newcommand\equalhat{\mathrel{\stackon[1.5pt]{=}{\stretchto{%
+\scalerel*[\widthof{=}]{\wedge}{\rule{1ex}{3ex}}}{0.5ex}}}}
+\newcommand{\nmax}{N_{\text{max}}}
+\newcommand{\inner}[2]{\bra{#1}\mkern-7.7mu\ket{#2}}
+\newcommand{\dd}{\text{d}}
 %---------------------------------------------------------------------
 
 \begin{document}
@@ -67,8 +73,11 @@
   \end{itemize}
 \end{frame}
 
-\input{sections/01_introduction}
-
+\input{sections/01_introduction.tex}
+\input{sections/02_physics.tex}
+\input{sections/03_machineLearning.tex}
+\input{sections/04_math.tex}
+\input{sections/05_results.tex}
 %----------------------------------------------------------------------
 % Thank you page is assembled from metadata.tex
 \begin{frame}
@@ -108,3 +117,91 @@
 \end{document}
 % Enable spell checker for vim
 % setlocal spell spelllang=de
+
+
+%----------------------------------------------------------------------
+
+% \section{Introduction}
+% \subsection{Physics}
+% The physical equation governing the setup of the problem is given by the Time Independent Schrödinger's Equation (\textbf{TISE})
+
+% \begin{equation}
+%     \HH \ket{\psi} = E \ket{\psi}
+%     \label{eq:TISE}
+% \end{equation}
+% where $\HH$ describes a Hermitian Operator acting on state vectors $\ket{\psi}\in \mathcal{H}$, with real eigenvalues $E$.\\
+% For high dimensional systems, this equation can become arbitrarily difficult, with no existing analytical solution for most cases. While several approximations can be made to simplify the scenario itself, the solution can also be approximated numerically without simplifying the scenario.
+% \\
+
+% In our case, we will attempt to approximate the groundstate $\ket{\psi_0}$ with a state $\ket{\psi_\Theta}$, and then descend as close as possible to the real state. One way to do this is by minimizing energy eigenvalue as, assuming the eigenstates of $\HH$ form a basis for $\mathcal{H}$, we have that:
+
+% \begin{equation}
+%     \boxed{\bra{\psi_{\Theta}} \HH \ket{\psi_\Theta} = \sum_{i, j = 0}^\infty \bar{\alpha}_i\,\alpha_j\bra{\psi_i} \HH\ket{\psi_j} = \sum_{i = 0}^\infty |\alpha_i|^2 E_i \geq \sum_{i = 0}^\infty |\alpha_i|^2 E_0 = E_0}
+%     \label{eq:state_E0_ineq}
+% \end{equation}
+% We can therefore approximate the groundstate energy simply by minimizing the expectation value $\langle \HH \rangle _{\psi_{\Theta}}$.\\
+% If we project to a hyperplane orthogonal to the corresponding approximated groundstate $\ket{\widetilde{\psi}_0}$, we have a similar scenario for the next smallest eigenvalue, and can therefore repeat the process to calculate an arbitrary number of eigenstates and eigen-energies.
+% \\
+% In fact, given a basis for a problem $\{\ket{\varphi_i}\}_i$, we can define the (possibly infinite dimensional) matrices  $\widetilde{H}$ and $S$ with $(\widetilde{H})_{ij} = \bra{\varphi_i}\HH\ket{\varphi_j}$ and $(S)_{ij} = \bra{\varphi_i}\ket{\varphi_j}$, the secular equations \ref{} give the following equation for the eigen-energies:
+
+% \begin{equation}
+%     \det\left(\widetilde{H} - E\cdot S\right)
+%     \label{eq:secular_eqs}
+% \end{equation}
+
+% Which, when $\{\ket{\varphi_i}\}_i$ are orthonormal, have $S$ become the identity matrix and therefore equation \eqref{eq:secular_eqs} becomes analogous to finding the eigenvalues of $\widetilde{H}$.
+% % However, the problem has been shifted to the computation of $\langle \HH \rangle _{\psi_{\Theta}}$, as there are infinite terms in this sum. A possible solution is to truncate the degree to which we consider the eigensates. That is, we define a truncation parameter $N_{\max}$ such that we redefine the approximated state as
+% However, with an infinite basis these approaches are not in general solvable numerically. A possible solution is to truncate the degree to which we consider the eigensates. That is, we define a truncation parameter $N_{\max}$ such that we redefine the approximated state as
+
+% \begin{equation*}
+%     \ket{\psi_{\Theta}} \coloneqq \sum_{k=0}^{N_\text{max}} \alpha_k \ket{\psi_k}
+% \end{equation*}
+
+% Then the problem of finding the energies amount to finding eigenvalues of a finite dimensional matrices, which can be approximated numerically. The energies found through the eigenvalues are only approximations to the actual energies, with the errors of these approximations depending on $N_{\max}$. \\It has been shown that, while the energy approximations converge as ${N_{\max} \to \infty}$, this solution suffers from the curse of dimensionality: the parameter $N_{\max}$ depends exponentially on the number of dimensions $d$ of the system for convergence. A possible solution to this problem rises from Machine Learning.
+
+% \subsection{Machine Learning}
+% To avoid increasing the parameter $\nmax$ exponentially in relation to $d$, one could consider adding more flexibility to the basis. We will consider coordinate space to achieve this ($\ket{\psi} \equalhat{\psi(x)}$). Given a basis $\{\varphi_i\}_{i}$, we define the augmented basis elements using a coordinate transformation.
+% \begin{equation}
+%     \varphi^{A}_i(x) = \varphi_i(g(x)) \cdot \sqrt{\det{\frac{\dd g}{\dd x}}}
+%     \label{eq:augmented_basis}
+% \end{equation}
+% where $ \sqrt{\det{\frac{\dd g}{\dd x}}}$ is the square root of the determinant of the Jacobian of this coordinate transformation, which is only used to preserve normalization:
+% \begin{align*}
+%     \inner{\varphi^A_i}{\varphi^A_j} &= \int \varphi^A_i(x)\cdot{\varphi^A_j(x)}\dd x = \int \varphi_i(g(x))\cdot\varphi_j(g(x))\left({\frac{\dd g}{\dd x}}\right) \dd x  \\
+%     &=  \int \varphi_i(g)\cdot\varphi_j(g)\left({\frac{\dd g}{\dd x}}\right) \cdot \frac{\dd x}{\dd g} \dd g = \inner{\varphi_i}{\varphi_j}=1
+% \end{align*}
+
+% We can notice that defining a different basis through this form, instead of some, albeit more flexible, arbitrary neural network $\{\text{NN}_i(x)\}_{i=0}^\infty$ ensures two things:
+% \begin{itemize}
+%     \item The augmented basis elements $\{\varphi^A_i\}_i$ constitute a basis for the space $\mathcal{H}$ when considered without a truncation parameter (which is not given for any set $\{\text{NN}_i\}_i$)
+%     \item Orthonormality is preserved between the augmented basis elements $\{\varphi^A_i\}_{i}$
+% \end{itemize}
+% We also need to impose two further restrictions on the function $g$ for the previous manipulation to be valid: 
+% \begin{itemize}
+%     \item $g$ must have an inverse
+%     \item $g$ must be differentiable and have a differentiable inverse ($g$ must be a diffeomorphism)
+% \end{itemize}
+
+% The benefits given using this approach might be subtle: orthonormality preservation is needed to maintain the equivalence between the secular equations and diagonalizing $\widetilde{H}$, while having basis preservation is needed for the convergence of the approximated eigenvalues to the actual eigenvalues as ${\nmax \to \infty}$. \\
+
+% These requirements lead into a possible model for $g$: Normalizing Flows. This model is entirely based on finding diffeomorphisms $\{f_k\}_{k=1}^n$ and composing them (as diffeomorphisms are closed under composition) as follows:
+% \begin{equation*}
+%     \b{z} = (f_n\circ f_{n-1} \circ \dots \circ f_1 )(\b{x})
+% \end{equation*}
+
+% We can then define different schemes for normalizing flows to test the method. 
+
+% \subsection{RNVP model}
+% The Real-valued Non-Volume-Preserving model is a type of normalizing flow in which each layer $f_k(x)$ is given by 
+% \begin{equation}
+%     f_k(x) = \mathcal{P}_k[x] + (\mathbb{1} - \mathcal{P}_k) [g_k(\mathcal{P}_k[x])] \quad \text{with} \quad g_k(z) =  e^{s_k(z)} \odot z + t_k(z)
+%     \label{eq:layer_RNVP}
+% \end{equation}
+%  where $\odot$ denotes the Hadamard or elementwise product, $\mathcal{P}_k$ is a projection over $\lfloor\dim{x}/2\rfloor$ of the components of $x$, and $t_k$ and $s_k$ are arbitrary differentiable functions with same input and output dimension (and with $s_k(x) \neq 0 \;\; \forall x$).  This function is invertible and differentiable with its inverse given by
+%  \begin{equation*}
+%      f_k^{-1}(z) = \mathcal{P}_k[z] + (\mathbb{1} - \mathcal{P}_k) [g_k^{-1}(\mathcal{P}_k[z])] \quad \text{with} \quad g_k^{-1}(z) =  e^{-s_k(z)} \odot (z - t_k(z))
+%  \end{equation*}
+
+
+
+

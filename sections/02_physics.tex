@@ -1,0 +1,73 @@
+%----------------------------------------------------------------------
+% Missuse parts as chapters according to DESY PR
+\part[Part slide]{Physics}
+\makepart%
+
+%----------------------------------------------------------------------
+% Add a sample slide with some math, some columns etc.
+\begin{frame}[t,label=intro]
+    \frametitle{Problem Setup}
+    \begin{itemize}[<+->]
+        \setlength\itemsep{.5em}
+        \item Time Independent Schrödiger Equation (\textbf{TISE}) 
+        \[ E\ket{\psi} = \Hhat\ket{\psi}\]
+        \item We approximate it using the variational principle~\ref{}
+        \item Fundamentally: We need loss function to optimize
+        \item Energy of approximation state $E_\Theta$ is always $\geq$ than groundstate $E_0$
+        \begin{proof}
+            Assuming normalization of $\ket{\psi_{\Theta}}$ and letting ${\{\ket{k}\}}_{k=1}^\infty$ be eigenstates of $\Hhat$
+            \begin{equation}
+                E_\Theta = \bra{\psi_{\Theta}}\Hhat\ket{\psi_{\Theta}} = 
+                \sum_{m, n = 0}^\infty \bar{\alpha}_m \alpha_n 
+                \underbrace{\bra{m}\Hhat\ket{n}}_{E_n\cdot \delta_{m,n}}
+                = \sum_{n=0}^\infty |\alpha_n|^2 E_n \geq E_0 \sum_{n=0}^\infty |\alpha_n|^2  = E_0
+                \label{eq:larger_than_groundstate_E}
+            \end{equation}
+        \end{proof}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Variational Principle}
+    \begin{itemize}
+        \setlength\itemsep{0.9em}
+        \item This principle applies to higher order eigenenergies
+        \item Idea: Consider orthogonal subspace to $\ket{0}$ and reapply~\eqref{eq:larger_than_groundstate_E}
+        \item Can be done for all space (if it is separable)
+        \item More rigorous approach in~\ref{}
+        \item $\Rightarrow$ must diagonalize ${[\widetilde{H}]}_{ij}=\bra{\varphi_i}\Hhat\ket{\varphi_j}$
+                given arbitrary orthonormal basis ${\{\ket{\varphi_k}\}}_{k=1}^\infty$
+        \item Can be an infinite dimensional matrix
+        \item $\infty$ is a problem numerically
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Managing $\infty$}
+    \begin{itemize}[<+->]
+        \setlength\itemsep{0.8em}
+        \item Define a truncation parameter $\nmax$
+        \item Approximate state as \[\ket{\psi} \approx \sum_{k=0}^{\nmax} c_k \ket{\varphi_k}\]
+        \item Becomes finite-dimensional problem
+        \item Recall: Curse of dimensionality!
+        \item $\nmax$ needed to converge to real results scales \textit{exponentially} with $d$
+        \item Approach: define a more flexible `augmented basis' ${\{\ket{\varphi_i^A}\}}_i$ 
+        \item Reduce $\nmax$ needed when augmented basis is optimized
+    \end{itemize}
+\end{frame}
+
+
+% left aligned columns. Note that columns with smaller width are
+% centred automatically
+% \begin{columns}
+%     \begin{column}[t]{0.48\textwidth}
+%     Duis autem vel eum iriure dolor in hendrerit in vulputate velit
+%     esse molestie consequat, vel illum dolore eu feugiat nulla
+%     facilisis at vero eros et accumsan\ldots
+%     \end{column}
+%     \begin{column}[t]{0.48\textwidth}
+%     Nam liber tempor cum soluta nobis eleifend option congue nihil
+%     imperdiet \ldots
+%     \end{column}
+% \end{columns}
+

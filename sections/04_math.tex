@@ -1,0 +1,12 @@
+\begin{frame}
+    \frametitle{Convergence}
+    How do we know $\displaystyle{\sum_{k=0}^{\nmax}c_k \varphi_k^A}$ converges to the real result as ${\nmax} \to \infty$?
+    \begin{itemize}
+        \item Let $g$ be the normalizing flow
+        \item Analogous to showing $f \circ g \in \mathcal{S}\,\, \forall f \in \mathcal{S}$
+        \item $\mathcal{S}$ are rapidly decreasing, infinitely differentiable functions
+        \item \[ \equiv f \in C^\infty | \|x^\beta \cdot \frac{\partial^\alpha}{\partial^\alpha}\| < \infty \]
+        \item If $g$ is RNVP (with a slight modification), then $f \circ g \in \mathcal{S}$
+        \item \textit{Proof left as an exercise to the reader}
+    \end{itemize}
+\end{frame}
