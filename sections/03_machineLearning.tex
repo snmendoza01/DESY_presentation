@@ -45,25 +45,19 @@
     \begin{itemize}
         \setlength\itemsep{.6em}
         \item The Real-valued Non-Volume-Preserving Normalizing Flow
-        \item Let $\mathcal{P}_k$ be a projection over half of the basis vectors and $\mathcal{Q}_k \equiv \mathbb{1} - \mathcal{P}_k$
-        \item layer $g_k(x)$ is given by 
-            \begin{equation}
-                g_k(x) = \mathcal{P}_k[x] + \mathcal{Q}_k [f_k(x)] \quad \text{with} \quad f_k(x) =  e^{s_k(\mathcal{P}_k[x])} \odot x + t_k(\mathcal{P}_k[x])
-                \label{eq:layer_RNVP}
-            \end{equation}
         % \item The inverse of $g \equiv g_M\circ g_{M-1}\circ \dots \circ g_1$ is $g^{-1} = g_M^{-1} \circ g_{M-1}^{-1} \circ \dots \circ g_1^{-1}$
     \end{itemize}
     \begin{columns}
         \begin{column}[t]{0.48\textwidth}
+            \item Let $\mathcal{P}_k$ be a projection over half of the basis vectors and $\mathcal{Q}_k \equiv \mathbb{1} - \mathcal{P}_k$
             \begin{itemize}
-                \item Each $g_k$ is invertible: 
-                \[
-                    g_k^{-1}(z) = \mathcal{P}_k[z] + \mathcal{Q}_k[f_k^{-1}(z)] 
-                \]
-                \[ 
-                    \text{with} \quad f_k^{-1}(z) =  e^{-s_k(\mathcal{P}_k[z])} \odot (z - t_k(\mathcal{P}_k[z]))
-                \]
-                \item Can be shown rigorously
+                \item layer $g_k(x)$ is given by 
+                \begin{equation}
+                    g_k(x) = \mathcal{P}_k[x] + \mathcal{Q}_k [f_k(x)] \quad \text{with} \quad f_k(x) =  e^{s_k(\mathcal{P}_k[x])} \odot x + t_k(\mathcal{P}_k[x])
+                    \label{eq:layer_RNVP}
+                \end{equation}
+                \setlength\itemsep{.6em}
+                \item Inverse can be shown rigorously
                 % \item sub Recall that for a projection $\mathcal{P}$, we have $\mathcal{P}^2 = \mathcal{P}$
                 % \item sub Using linearity of $\mathcal{Q}$ and noticing it commutes with diagonal matrices
             \end{itemize}
