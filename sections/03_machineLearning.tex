@@ -53,8 +53,10 @@
             \begin{itemize}
                 \item layer $g_k(x)$ is given by 
                 \begin{equation}
-                    g_k(x) = \mathcal{P}_k[x] + \mathcal{Q}_k [f_k(x)] \quad \\
-                    \text{with} \quad f_k(x) =  e^{s_k(\mathcal{P}_k[x])} \odot x + t_k(\mathcal{P}_k[x])
+                    \begin{split}
+                        g_k(x) &= \mathcal{P}_k[x] + \mathcal{Q}_k [f_k(x)] \quad \\
+                        \text{with} \quad f_k(x) &=  e^{s_k(\mathcal{P}_k[x])} \odot x + t_k(\mathcal{P}_k[x])
+                    \end{split}
                     \label{eq:layer_RNVP}
                 \end{equation}
                 \setlength\itemsep{.6em}
