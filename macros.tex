@@ -7,6 +7,8 @@
 \usepackage{bookmark}
 \usepackage{graphicx}
 \usepackage{fontspec}
+\usepackage{braket}
+% \usepackage{enumitem}
 
 % Force beamer to use Arial. Without this it will fall back to
 % Libertine in all ``normal'' text areas. It seems they are not easily
@@ -34,6 +36,9 @@
     draw=fzjlightblue,fill=fzjgray30,rounded corners,anchor=north west,
   },
 }
+\usepackage{scalerel,stackengine,amsmath}
+\usepackage{bbold}
+\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex} 
 % Usage:
 % \tikzoverlay at (-1cm,-5cm) {content};
 % or
@@ -106,3 +111,10 @@
    \itemize
 }{\enditemize}
 \makeatother
+
+\newcommand{\Hhat}{\hat{H}}
+\newcommand\equalhat{\mathrel{\stackon[1.5pt]{=}{\stretchto{%
+    \scalerel*[\widthof{=}]{\wedge}{\rule{1ex}{3ex}}}{0.5ex}}}}
+\newcommand{\nmax}{N_{\text{max}}}
+\newcommand{\inner}[2]{\bra{#1}\mkern-7.7mu\ket{#2}}
+\newcommand{\dd}{\text{d}}
