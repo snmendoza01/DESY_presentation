@@ -8,7 +8,7 @@
     \frametitle{Role of ML}
     \begin{itemize}[<+->]
         \setlength\itemsep{1em}
-        \item Will start considering coordinate space: $\ket{\psi} \equiv \psi(x)$
+        \item Will start considering coordinate space: $\ket{\psi} \equalhat \psi(x)$
         \item Define augmented basis as:
             \begin{equation}
                 \varphi_k^A(x) = \varphi_k(g(x)) \cdot \sqrt{\det\left|\frac{\dd g}{\dd x}\right|}
@@ -27,39 +27,50 @@
 
 \begin{frame}
     \frametitle{Normalizing Flows}
-    \begin{itemize}[<+->]
-        \setlength\itemsep{1em}
-        \item Basic idea: A chain of diffeomorphisms
-        \item Invertible and differentiable
-        \begin{equation*}
-            \boldmath{z} = (f_n\circ f_{n-1} \circ \dots \circ f_1 )(\boldmath{x})
-        \end{equation*}
-        \item Several different paradigms
-        \item Need to find which ones best improve flexibility of basis states
-        \item We concentrate on RNVP 
-    \end{itemize}
+    \begin{columns}
+        \begin{column}[t]{0.48\textwidth}
+            \begin{itemize}[<+->]
+                \setlength\itemsep{.6em}
+                \item Basic idea: A chain of diffeomorphisms
+                \item Invertible and differentiable
+                \begin{equation*}
+                    \boldmath{z} = (f_n\circ f_{n-1} \circ \dots \circ f_1 )(\boldmath{x})
+                \end{equation*}
+            \end{itemize}
+        \end{column}
+        \begin{column}[t]{0.48\textwidth}
+            \begin{itemize}[<+->]
+                \setlength\itemsep{.6em}
+                \item Several different paradigms
+                \item Need to find which ones best improve flexibility of basis states
+                \item We concentrate on RNVP 
+            \end{itemize}      
+        \end{column}
+    \end{columns}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{img/normalizing_flow_layout.png}
+        \caption{Normalizing Flow~\cite{UvA}}
+        \label{fig:normalizingFlow}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
     \frametitle{RNVP}
-    \begin{itemize}
-        \setlength\itemsep{.6em}
-        \item The Real-valued Non-Volume-Preserving Normalizing Flow
-        % \item The inverse of $g \equiv g_M\circ g_{M-1}\circ \dots \circ g_1$ is $g^{-1} = g_M^{-1} \circ g_{M-1}^{-1} \circ \dots \circ g_1^{-1}$
-    \end{itemize}
     \begin{columns}
         \begin{column}[t]{0.48\textwidth}
-            \item Let $\mathcal{P}_k$ be a projection over half of the basis vectors and $\mathcal{Q}_k \equiv \mathbb{1} - \mathcal{P}_k$
-            \begin{itemize}
+            \begin{itemize}[<+->]
+                \setlength\itemsep{.8em}
+                \item The Real-valued Non-Volume-Preserving model
+                \item Let $\mathcal{P}_k$ be a projection over half of the basis vectors and $\mathcal{Q}_k \equiv \mathbb{1} - \mathcal{P}_k$
                 \item layer $g_k(x)$ is given by 
                 \begin{equation}
                     \begin{split}
-                        g_k(x) &= \mathcal{P}_k[x] + \mathcal{Q}_k [f_k(x)] \quad \\
-                        \text{with} \quad f_k(x) &=  e^{s_k(\mathcal{P}_k[x])} \odot x + t_k(\mathcal{P}_k[x])
+                        g_k(x) &= \mathcal{P}_k[x] + \mathcal{Q}_k [f_k(x)] \quad \text{with}\\
+                        f_k(x) &=  e^{s_k(\mathcal{P}_k[x])} \odot x + t_k(\mathcal{P}_k[x])
                     \end{split}
                     \label{eq:layer_RNVP}
                 \end{equation}
-                \setlength\itemsep{.6em}
                 \item Inverse can be shown rigorously
                 % \item sub Recall that for a projection $\mathcal{P}$, we have $\mathcal{P}^2 = \mathcal{P}$
                 % \item sub Using linearity of $\mathcal{Q}$ and noticing it commutes with diagonal matrices
@@ -68,7 +79,8 @@
 
         \begin{column}[t]{0.48\textwidth}
             \begin{figure}
-                \includegraphics[width=\textwidth]{img/RNVP-basic-layer.png}
+                \includegraphics[width=\textwidth, trim={0 0 0 1.5cm}, clip]{img/RNVP-basic-layer.png}
+                \caption{Basic layer of RNVP~\cite{Kothe21}}
             \end{figure} 
         \end{column}
     \end{columns}
